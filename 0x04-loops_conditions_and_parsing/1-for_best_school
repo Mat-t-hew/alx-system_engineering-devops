@@ -2,5 +2,5 @@
 # is a script that run and repeat 10 times of the string in echo
 for ((i=0; i<=9; i++))
 do
-	echo "Holberton School"
+	echo "Best School"
 done
