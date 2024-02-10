@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Redirection /redirect_me
+sudo apt-get update
+sudo apt-get -y install nginx
+
+# Create index.html with some content (not specified in the task, but good practice)
+echo 'Hello World' | sudo tee /var/www/html/index.html > /dev/null
+
+# Use sed to insert the redirection configuration inside the server block
+sudo sed -i '/server {/a \
+    location /redirect_me {\
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\
+    }\
+' /etc/nginx/sites-available/default
+
+# Restart nginx to apply the changes
+sudo service nginx restart
