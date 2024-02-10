@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
+
 # Updating package lists and installing nginx
-apt-get -y update
-apt-get -y install nginx
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+# Creating /var/www/html directory if it doesn't exist
+sudo mkdir -p /var/www/html
 
 # Setting ownership for index.html
-INDEX_HTML="/var/www/html/index.html"
-chown $USER:$USER "$INDEX_HTML"
+sudo chown $USER:$USER /var/www/html/index.html
 
 # Creating index.html with "Hello World!"
-echo "Hello World!" > "$INDEX_HTML"
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
 
 # Restarting nginx without systemctl
-kill -s HUP $(pgrep -f "nginx: master process")
+sudo kill -s HUP $(pgrep -f "nginx: master process")
