@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Redirection /redirect_me
 sudo apt-get update
 sudo apt-get -y install nginx
