@@ -9,7 +9,7 @@ echo "Hello World" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
 # Create directory for custom error pages
 sudo mkdir -p /var/www/error
 
-# Create custom 404 page with proper HTTP status code
+# Create custom 404 page with proper HTTP status code and content
 echo -e "HTTP/1.0 404 Not Found\nContent-Type: text/html\n\nCeci n'est pas une page" | sudo tee /var/www/error/404.html > /dev/null
 
 # Add redirection configuration
@@ -28,10 +28,3 @@ sudo sed -i '/server_name _/a \
 
 # Restart nginx to apply the changes
 sudo service nginx restart
-
-# Verify changes by curling the configured endpoints
-echo "Verifying configurations..."
-echo "Custom 404 Page:"
-curl -I http://localhost/404.html
-echo "Redirect Endpoint:"
-curl -I http://localhost/redirect_me
