@@ -4,13 +4,13 @@ sudo apt-get update
 sudo apt-get -y install nginx
 
 # Set the default index page content
-echo "Hello World" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+echo "Holberton School" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
 
 # Create directory for custom error pages
 sudo mkdir -p /var/www/error
 
-# Create custom 404 page with proper HTTP status code and content
-echo -e "HTTP/1.0 404 Not Found\nContent-Type: text/html\n\nCeci n'est pas une page" | sudo tee /var/www/error/404.html > /dev/null
+# Create custom 404 page
+echo "Ceci n'est pas une page" | sudo tee /var/www/error/404.html > /dev/null
 
 # Add redirection configuration
 sudo sed -i '/server_name _/a \
