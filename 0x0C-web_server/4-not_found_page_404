@@ -12,33 +12,18 @@ sudo bash -c 'cat <<EOF > /var/www/html/404.html
 </head>
 <body>
     <h1>404 Not Found</h1>
-    <p>Ceci n&apos;est pas une page</p>
+    <p>Ceci n'est pas une page</p>
 </body>
 </html>
 EOF'
 
 # Configure Nginx to use the custom 404 page
-sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/default
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-    index index.html index.htm;
-
-    server_name _;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-
-    error_page 404 /404.html;
-    location = /404.html {
-        root /var/www/html;
-        internal;
-    }
-}
-EOF'
+sudo sed -i '/server_name _/a \
+    error_page 404 /404.html; \
+    location = /404.html { \
+        root /var/www/html; \
+        internal; \
+    }' /etc/nginx/sites-available/default
 
 # Restart Nginx to apply the changes
-sudo service nginx restart
+sudo systemctl restart nginx
