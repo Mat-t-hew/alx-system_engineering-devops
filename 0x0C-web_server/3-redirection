@@ -1,17 +1,31 @@
 #!/usr/bin/env bash
-# Redirection /redirect_me
+# Update package lists and install nginx
 sudo apt-get update
 sudo apt-get -y install nginx
 
-# Create index.html with some content (not specified in the task, but good practice)
-echo 'Hello World' | sudo tee /var/www/html/index.html > /dev/null
+# Create index.html with "Hello World!" content
+echo 'Hello World!' | sudo tee /var/www/html/index.html > /dev/null
 
-# Use sed to insert the redirection configuration inside the server block
-sudo sed -i '/server {/a 
+# Configure redirection with a 301 Moved Permanently status code
+sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/default
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm;
+
+    server_name _;
+
     location /redirect_me {
         return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
-' /etc/nginx/sites-available/default
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF'
 
 # Restart nginx to apply the changes
 sudo service nginx restart
