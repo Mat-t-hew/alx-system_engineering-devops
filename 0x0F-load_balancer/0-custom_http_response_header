@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Update the package lists and configures web01 with web02
 sudo apt update
 
