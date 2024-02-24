@@ -1,10 +1,13 @@
 #!/bin/bash
 
-# Update the package lists and configures web01 with web02
+# Update the package lists
 sudo apt update
 
 # Install Nginx if not already installed
 sudo apt install -y nginx
+
+# Remove the default server block
+sudo rm /etc/nginx/sites-enabled/default
 
 # Configure Nginx to add custom HTTP response header
 cat <<EOF | sudo tee /etc/nginx/sites-available/custom-header
@@ -15,11 +18,10 @@ server {
     root /var/www/html;
     index index.html index.htm index.nginx-debian.html;
 
-    server_name _;
+    # Add custom HTTP response header
+    add_header X-Served-By \$hostname;
 
     location / {
-        # Add custom HTTP response header
-        add_header X-Served-By \$hostname;
         try_files \$uri \$uri/ =404;
     }
 }
