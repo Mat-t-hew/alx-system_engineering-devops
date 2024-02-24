@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-# Update the package lists
+# Update the package lists and configures both webservers
 sudo apt update
 
 # Install Nginx if not already installed
