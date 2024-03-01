@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Function to display DNS information for a subdomain
+display_dns_info() {
+    local domain=$1
+    local subdomain=$2
+
+    # Use dig command to get DNS information
+    local dns_info=$(dig +short ${subdomain}.${domain})
+
+    # Check if dig command was successful
+    if [ $? -eq 0 ]; then
+        # Extract DNS record type and destination
+        local record_type=$(echo ${dns_info} | awk '{print $1}')
+        local destination=$(echo ${dns_info} | awk '{print $2}')
+
+        # Display DNS information
+        echo "The subdomain ${subdomain} is a ${record_type} record and points to ${destination}"
+    else
+        echo "Error: Failed to retrieve DNS information for ${subdomain}.${domain}"
+    fi
+}
+
+# Main function
+main() {
+    # Validate input arguments
+    if [ $# -ne 1 ] && [ $# -ne 2 ]; then
+        echo "Usage: $0 <domain> [<subdomain>]"
+        exit 1
+    fi
+
+    local domain=$1
+    local subdomain=$2
+
+    # Check if subdomain is provided
+    if [ -z "${subdomain}" ]; then
+        # If no subdomain is provided, audit default subdomains
+        subdomains=("www" "lb-01" "web-01" "web-02")
+        for sub in "${subdomains[@]}"; do
+            display_dns_info ${domain} ${sub}
+        done
+    else
+        # Audit the specified subdomain
+        display_dns_info ${domain} ${subdomain}
+    fi
+}
+
+# Run the main function with input arguments
+main "$@"
