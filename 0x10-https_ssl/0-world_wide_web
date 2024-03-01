@@ -10,8 +10,8 @@ display_dns_info() {
     # Check if dig command was successful
     if [ $? -eq 0 ]; then
         # Extract DNS record type and destination
-        local record_type=$(echo ${dns_info} | awk '{print $1}')
-        local destination=$(echo ${dns_info} | awk '{print $2}')
+        local record_type=$(dig +short -t A ${subdomain}.${domain})
+        local destination=$(dig +short ${subdomain}.${domain})
 
         # Display DNS information
         echo "The subdomain ${subdomain} is a ${record_type} record and points to ${destination}"
