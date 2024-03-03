@@ -1,1 +1,29 @@
-1
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+
+defaults
+    log global
+    option tcplog
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+
+frontend http-in
+    bind *:80
+    bind *:443 ssl crt /etc/letsencrypt/live/www.mat-t-hew.tech/fullchain.pem
+    mode http
+    default_backend servers
+
+backend servers
+    mode http
+    balance roundrobin
+    server 257034-web-01 52.91.153.57 check
+    server 257034-web-02 34.227.101.246 check
