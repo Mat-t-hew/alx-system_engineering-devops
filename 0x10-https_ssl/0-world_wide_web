@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # Function to display DNS information for a subdomain
 display_dns_info() {
     local domain=$1
@@ -10,12 +11,12 @@ display_dns_info() {
     # Check if dig command was successful
     if [ $? -eq 0 ]; then
         # Extract IP address from DNS information
-        local ip_address=$(dig +short -t A ${subdomain}.${domain})
+        local ip_address=$(echo "${dns_info}" | head -n 1)
 
         # Display DNS information
         echo "The subdomain ${subdomain} is a A record and points to ${ip_address}"
     else
-        echo "Error: Failed to retrieve DNS information for ${subdomain}.${domain}"
+        echo "No DNS record found for ${subdomain}.${domain}"
     fi
 }
 
