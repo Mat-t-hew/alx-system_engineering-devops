@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # Function to display DNS information for a subdomain
 display_dns_info() {
     local domain=$1
@@ -9,12 +10,17 @@ display_dns_info() {
 
     # Check if dig command was successful
     if [ $? -eq 0 ]; then
-        # Extract DNS record type and destination
-        local record_type=$(dig +short -t A ${subdomain}.${domain})
-        local destination=$(dig +short ${subdomain}.${domain})
+        # Check if DNS information is empty
+        if [ -z "$dns_info" ]; then
+            echo "No DNS record found for ${subdomain}.${domain}"
+        else
+            # Extract DNS record type and destination
+            local record_type=$(dig +short -t ${subdomain}.${domain} | awk '{ print $4 }')
+            local destination=$(dig +short ${subdomain}.${domain} | awk '{ print $1 }')
 
-        # Display DNS information
-        echo "The subdomain ${subdomain} is a ${record_type} record and points to ${destination}"
+            # Display DNS information
+            echo "The subdomain ${subdomain} is a ${record_type} record and points to ${destination}"
+        fi
     else
         echo "Error: Failed to retrieve DNS information for ${subdomain}.${domain}"
     fi
