@@ -1,31 +1,5 @@
 #!/usr/bin/env bash
-# Check if the password argument is provided
-if [ -z "$1" ]; then
-    echo "Error: Password argument is missing."
-    echo "Usage: $0 <mysql_password>"
-    exit 1
-fi
+# Generates a MySQL dump and creates a compressed archive out of it
 
-# Define MySQL dump file name and archive name
-backup_file="backup.sql"
-archive_name="$(date +'%d-%m-%Y').tar.gz"
-
-# Perform MySQL dump
-mysqldump -u root -p"$1" --all-databases > "$backup_file"
-
-# Check if MySQL dump was successful
-if [ $? -ne 0 ]; then
-    echo "Error: MySQL dump failed. Please check your MySQL credentials."
-    exit 1
-fi
-
-# Create tar.gz archive
-tar -czf "$archive_name" "$backup_file"
-
-# Check if archive creation was successful
-if [ $? -eq 0 ]; then
-    echo "Backup created successfully: $archive_name"
-    rm "$backup_file" # Remove MySQL dump file after archiving
-else
-    echo "Error: Archive creation failed."
-fi
+mysqldump -uroot -p"$1" --all-databases > backup.sql
+tar -czf $(date +%d-%m-%Y).tar.gz backup.sql
