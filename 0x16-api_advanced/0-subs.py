@@ -1,31 +1,18 @@
 #!/usr/bin/python3
-""" How many subs? """
+"""
+ function that queries the Reddit API
+ and returns the number of subscribers
+"""
+import requests
 
 
 def number_of_subscribers(subreddit):
-    """ Returns subscriber count of subreddit or 0 """
-    from requests import get
-
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-
-    headers = {'user-agent': 'Alx Project'}
-
-    r = get(url, headers=headers, allow_redirects=False)
-
-    if r.status_code != 200:
-        return 0
-
-    try:
-        js = r.json()
-
-    except ValueError:
-        return 0
-
-    data = js.get("data")
-
-    if data:
-        sub_count = data.get("subscribers")
-        if sub_count:
-            return sub_count
-
-    return 0
+    """initializate"""
+    if (type(subreddit) is not str):
+        return(0)
+    url_api = ("https://www.reddit.com/r/{}/about.json".format(subreddit))
+    headers = {'user-agent': 'safari:schoolalx/0.7.4'}
+    response = requests.get(url_api, headers=headers)
+    if response.status_code is not 200:
+        return(0)
+    return(response.json().get("data").get("subscribers"))
