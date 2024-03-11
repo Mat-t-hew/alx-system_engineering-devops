@@ -1,4 +1,4 @@
-# Summary: MySQL Installation and Database Administration
+# MySQL Installation and Database Administration
 
 ## Introduction
 This summary covers the process of performing a fresh reset and installation of MySQL 5.7 on Ubuntu servers, within the context of DevOps, SysAdmin, and database administration tasks.
