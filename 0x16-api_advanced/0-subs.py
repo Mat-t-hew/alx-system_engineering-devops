@@ -39,4 +39,4 @@ def number_of_subscribers(subreddit):
 
 # Example usage:
 subreddit = "learnpython"
-print("The number of subscribers in r/{} is: {}".format(subreddit, number_of_subscribers(subreddit)))
+print("Subscribers in r/{} is: {}".format(subreddit, number_of_subscribers(subreddit)))
