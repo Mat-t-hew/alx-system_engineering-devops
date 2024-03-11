@@ -21,7 +21,7 @@ def number_of_subscribers(subreddit):
         return 0
 
     url_api = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    headers = {'User-Agent': 'python:reddit_subscribers:v1.0.0 (by /u/bdov_)'}
+    headers = {'User-Agent':  'Python/1.0(Alx Project)'}
     response = requests.get(url_api, headers=headers)
 
     if response.status_code != 200:
