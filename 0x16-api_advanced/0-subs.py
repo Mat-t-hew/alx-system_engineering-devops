@@ -21,7 +21,7 @@ def number_of_subscribers(subreddit):
         return 0
 
     url_api = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    headers = {'User-Agent':  'Python/1.0(Alx Project)'}
+    headers = {'User-Agent': 'Python/1.0(Alx Project)'}
     response = requests.get(url_api, headers=headers)
 
     if response.status_code != 200:
@@ -30,3 +30,7 @@ def number_of_subscribers(subreddit):
     data = response.json().get("data", {})
     subscribers = data.get("subscribers", 0)
     return subscribers
+
+# Example usage:
+subreddit = "learnpython"
+subscribers = number_of_subscribers(subreddit)
