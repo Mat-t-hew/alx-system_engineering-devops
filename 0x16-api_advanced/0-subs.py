@@ -14,4 +14,6 @@ def number_of_subscribers(subreddit):
         return 0
     results = response.json().get("data")
     return results.get("subscribers")
+
+subreddit = "learnpython"
 print(f"The number of subscribers in r/{subreddit} is: {number_of_subscribers(subreddit)}")
