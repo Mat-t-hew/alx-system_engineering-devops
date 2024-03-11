@@ -10,14 +10,14 @@ def number_of_subscribers(subreddit):
         "User-Agent": "Python/1.0(Alx Project)"
     }
     response = requests.get(url, headers=headers, allow_redirects=False)
-    if response.status_code == 200:
-        return "OK"
-    elif response.status_code == 404:
+    if response.status_code == 404:
         return 0
+    elif response.status_code == 200:
+        return "OK"  # Return "OK" when request is successful
     else:
-        return "Failed"
+        return "Failed"  # Return "Failed" for any other status code
+
 
 # Example usage:
 subreddit = "learnpython"
-result = number_of_subscribers(subreddit)
-print(result)
+print(number_of_subscribers(subreddit))
