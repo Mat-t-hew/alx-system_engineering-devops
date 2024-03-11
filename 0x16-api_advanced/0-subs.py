@@ -4,7 +4,7 @@ import requests
 
 
 def number_of_subscribers(subreddit):
-    """Return the total number of subscribers on a given subreddit."""
+    """Return "OK" if the request is successful, otherwise return "Failed"."""
     url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
     headers = {
         "User-Agent": "Python/1.0(Alx Project)"
@@ -13,9 +13,9 @@ def number_of_subscribers(subreddit):
     if response.status_code == 404:
         return 0
     elif response.status_code == 200:
-        return "OK"  # Return "OK" when request is successful
+        return "OK"
     else:
-        return "Failed"  # Return "Failed" for any other status code
+        return "Failed"
 
 
 # Example usage:
