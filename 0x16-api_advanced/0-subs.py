@@ -25,18 +25,8 @@ def number_of_subscribers(subreddit):
     response = requests.get(url_api, headers=headers)
 
     if response.status_code != 200:
-        print("Request URL:", url_api)
-        print("Response status code:", response.status_code)
-        print("Failed to get data from API")
         return 0
 
     data = response.json().get("data", {})
     subscribers = data.get("subscribers", 0)
-    print("Request URL:", url_api)
-    print("Response status code:", response.status_code)
-    print("Number of subscribers:", subscribers)
     return subscribers
-
-# Example usage:
-subreddit = "learnpython"
-print("Subscribers: {}".format(subreddit, number_of_subscribers(subreddit)))
