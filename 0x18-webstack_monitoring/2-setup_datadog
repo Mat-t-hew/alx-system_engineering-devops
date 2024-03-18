@@ -1,0 +1,11 @@
+from datadog import initialize, api
+
+options = {
+    'api_key': '367d590ca014a3ab4b5f8c8b02d976e6',
+    'app_key': '4730cae1e0f83189305c7af55c057f54a58d0da3'
+}
+
+initialize(**options)
+
+
+print(api.Dashboard.delete(dashboard_id))
